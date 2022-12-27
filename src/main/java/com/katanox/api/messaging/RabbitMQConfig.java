@@ -1,4 +1,4 @@
-package com.katanox.api;
+package com.katanox.api.messaging;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -41,11 +41,11 @@ public class RabbitMQConfig {
         return new Jackson2JsonMessageConverter();
     }
 
-
     @Bean
     public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        rabbitTemplate.setDefaultReceiveQueue(queueName);
         return rabbitTemplate;
     }
 }
